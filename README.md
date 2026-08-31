@@ -13,7 +13,7 @@ Console management application for cooperative savings accounts, developed in .N
 
 The project follows a layered architecture pattern:
 
-- **Models**: Domain entities and data transfer objects (`Member`, `Transaction`, `TransactionType`, `TrmInfo`, and report models).
+- **Models**: Domain entities and data transfer objects (`Member`, `Transaction`, `TransactionType`, `TrmInfo`, and report models: `GeneralBalanceReport`, `MemberBalanceReport`, `PeriodSummaryReport`, `TopTransactionReport`, `MemberActivityReport`).
 - **Repositories**: Data access layer responsible for reading and writing data to local JSON files (`IMemberRepository`, `ITransactionRepository`).
 - **Services**: Business logic, validations, balance calculations, currency conversion, and analytical queries (`IMemberService`, `ITransactionService`, `ITrmService`, `IReportService`).
 - **Views**: Presentation layer handling console user input and output formatting (`MemberView`, `TransactionView`, `ReportView`).
@@ -45,10 +45,14 @@ The project follows a layered architecture pattern:
    - `GetTop10Transactions`: 10 largest transactions executed in the cooperative.
    - `GetCashFlowSummaryByMember`: Cash flow summary per member ordered by movement count.
 
-## Class Diagram
+## Class Diagrams
+
+### 1. Domain Models & DTOs Diagram
 
 ```mermaid
 classDiagram
+    direction LR
+
     class Member {
         +int Id
         +string DocumentNumber
@@ -83,6 +87,56 @@ classDiagram
         +DateTime ValidTo
     }
 
+    class GeneralBalanceReport {
+        +decimal TotalBalance
+        +int TotalMembers
+        +decimal AverageBalance
+    }
+
+    class MemberBalanceReport {
+        +string DocumentNumber
+        +string FullName
+        +decimal Balance
+    }
+
+    class PeriodSummaryReport {
+        +DateTime StartDate
+        +DateTime EndDate
+        +decimal TotalDeposits
+        +int DepositCount
+        +decimal TotalWithdrawals
+        +int WithdrawalCount
+        +decimal TotalFees
+        +decimal NetDifference
+    }
+
+    class TopTransactionReport {
+        +DateTime Date
+        +TransactionType Type
+        +decimal Amount
+        +string MemberName
+    }
+
+    class MemberActivityReport {
+        +string FullName
+        +int MovementCount
+        +decimal TotalDeposited
+        +decimal TotalWithdrawn
+        +decimal CurrentBalance
+    }
+
+    Member "1" <-- "*" Transaction : has
+    Transaction --> TransactionType
+    TopTransactionReport --> TransactionType
+```
+
+### 2. Architecture Diagram (Services & Repositories)
+
+```mermaid
+classDiagram
+    direction TB
+
+    %% Repositories
     class IMemberRepository {
         <<interface>>
         +GetAll() List~Member~
@@ -101,6 +155,18 @@ classDiagram
         +GetNextId() int
     }
 
+    class MemberRepository {
+        -string _filePath
+    }
+
+    class TransactionRepository {
+        -string _filePath
+    }
+
+    MemberRepository ..|> IMemberRepository
+    TransactionRepository ..|> ITransactionRepository
+
+    %% Services
     class IMemberService {
         <<interface>>
         +RegisterMember(...) Member
@@ -134,13 +200,33 @@ classDiagram
         +GetCashFlowSummaryByMember() List~MemberActivityReport~
     }
 
-    MemberRepository ..|> IMemberRepository
-    TransactionRepository ..|> ITransactionRepository
+    class MemberService {
+        -IMemberRepository _memberRepo
+        -ITransactionRepository _txRepo
+    }
+
+    class TransactionService {
+        -IMemberRepository _memberRepo
+        -ITransactionRepository _txRepo
+        -IMemberService _memberService
+    }
+
+    class TrmService {
+        -HttpClient _httpClient
+    }
+
+    class ReportService {
+        -IMemberRepository _memberRepo
+        -ITransactionRepository _txRepo
+        -IMemberService _memberService
+    }
+
     MemberService ..|> IMemberService
     TransactionService ..|> ITransactionService
     TrmService ..|> ITrmService
     ReportService ..|> IReportService
 
+    %% Dependencies
     MemberService --> IMemberRepository
     MemberService --> ITransactionRepository
     TransactionService --> IMemberRepository
@@ -149,7 +235,6 @@ classDiagram
     ReportService --> IMemberRepository
     ReportService --> ITransactionRepository
     ReportService --> IMemberService
-    Transaction --> TransactionType
 ```
 
 ## How to Run
