@@ -1,0 +1,74 @@
+[
+  {
+    "Id": 1,
+    "DocumentNumber": "10101001",
+    "FullName": "Carlos Mendoza",
+    "PhoneNumber": "3001234567",
+    "Address": "Calle 45 # 12-34",
+    "CreatedAt": "2026-08-01T08:30:00"
+  },
+  {
+    "Id": 2,
+    "DocumentNumber": "10101002",
+    "FullName": "Maria Fernanda Gomez",
+    "PhoneNumber": "3109876543",
+    "Address": "Carrera 7 # 85-20",
+    "CreatedAt": "2026-08-02T09:15:00"
+  },
+  {
+    "Id": 3,
+    "DocumentNumber": "10101003",
+    "FullName": "Juan Camilo Rodriguez",
+    "PhoneNumber": "3154567890",
+    "Address": "Avenida 19 # 104-50",
+    "CreatedAt": "2026-08-03T10:00:00"
+  },
+  {
+    "Id": 4,
+    "DocumentNumber": "10101004",
+    "FullName": "Andres Felipe Lopez",
+    "PhoneNumber": "3201122334",
+    "Address": "Transversal 23 # 45-67",
+    "CreatedAt": "2026-08-04T11:20:00"
+  },
+  {
+    "Id": 5,
+    "DocumentNumber": "10101005",
+    "FullName": "Laura Marcela Sanchez",
+    "PhoneNumber": "3113344556",
+    "Address": "Diagonal 50 # 30-15",
+    "CreatedAt": "2026-08-05T14:10:00"
+  },
+  {
+    "Id": 6,
+    "DocumentNumber": "10101006",
+    "FullName": "Diego Alejandro Ramirez",
+    "PhoneNumber": "3017788990",
+    "Address": "Calle 100 # 15-22",
+    "CreatedAt": "2026-08-06T15:45:00"
+  },
+  {
+    "Id": 7,
+    "DocumentNumber": "10101007",
+    "FullName": "Sofia Valentina Castro",
+    "PhoneNumber": "3189900112",
+    "Address": "Carrera 15 # 72-40",
+    "CreatedAt": "2026-08-07T16:30:00"
+  },
+  {
+    "Id": 8,
+    "DocumentNumber": "10101008",
+    "FullName": "Pedro Pablo Morales",
+    "PhoneNumber": "3125566778",
+    "Address": "Calle 68 # 50-10",
+    "CreatedAt": "2026-08-08T09:00:00"
+  },
+  {
+    "Id": 9,
+    "DocumentNumber": "10101009",
+    "FullName": "Ana Isabel Vargas",
+    "PhoneNumber": "3142233445",
+    "Address": "Avenida Chile # 10-05",
+    "CreatedAt": "2026-08-09T10:30:00"
+  }
+]
